@@ -22,18 +22,26 @@ init_app()
 # 1. What is the datatype of the returned value of
 # ``Brand.query.filter_by(name='Ford')``?
 
+# ANS: Result values are datatype Object; instances of the class Brand.
+
 # 2. In your own words, what is an association table, and what type of
 # relationship (many to one, many to many, one to one, etc.) does an
 # association table manage?
+
+# Association tables in many to many relationships.
+# They mostly contain references to related items in other tables,
+# as opposed to unique data.
+# They allow more flexibility to change schema in the future,
+# keep data cleaner and more easily accessible.
 
 # -------------------------------------------------------------------
 # Part 3: SQLAlchemy Queries
 
 # Get the brand with the ``id`` of "ram."
-q1 = "Brand.query.filter_by(brand_id='ram').one()"
+q1 = "Brand.query.get('ram')"
 
 # Get all models with the name "Corvette" and the brand_id "che."
-q2 = "db.session.query(Model).filter_by(name='Corvette',brand_id='che').all()"
+q2 = "Model.query.filter_by(name='Corvette',brand_id='che').all()"
 
 # Get all models that are older than 1960.
 q3 = "db.session.query(Model).filter(Model.year > 1960).all()"
@@ -64,39 +72,32 @@ def get_model_info(year):
 
     model_year = int(year)
 
-    year_models = db.session.query(Model.name, Brand.name, Brand.headquarters).join(Brand).filter(Model.year == model_year).all()
+    year_models = db.session.query(Model.name, Brand.name, Brand.headquarters).join(
+        Brand).filter(Model.year == model_year).all()
+    print "\t\tModel\t\tBrand\t\tHeadquarters\n"
+    # for mname, bname, bhq in year_models:
+    for row in year_models:
+        # if bhq is not None:
+        print("{: >20} {: >20} {: >20}".format(*row))
+            # print "%s\t\t%s\t\t%s" % (mname, bname, bhq)
+        # else:
+        #     print "%s\t\t%s\t\t - " % (mname, bname)
 
-    for ymodel in year_models:
-        if ymodel.brand.headquarters is not None:
-            print ymodel.name, ymodel.brand.name, ymodel.brand.headquarters
-        else:
-            print ymodel.name, ymodel.brand.name, "-"
-
-    return year_models
+    return "\nQuery complete.\n"
 
 
 def get_brands_summary():
     """Prints out each brand name and each model name with year for that brand
     using only ONE database query."""
 
-
     all_cars = db.session.query(Brand.name, Model.name, Model.year).join(Model).all()
+    print "Brand\t\tModel\t\tYear\n"
+    # for car, model, year in all_cars:
+    #     print "%s\t\t%s\t\t%d" % (car, model, year)
+    for row in all_cars:
+        print("{: >20} {: >20} {: >20}".format(*row))
 
-    for car in all_cars:
-        print name, model, year
-        # print car.name, car.model.name, car.model.year
-
-    return all_cars
-
-    # emps = db.session.query(Employee,
-    #                     Department).outerjoin(Department).all()
-
-# for emp, dept in emps:
-#     if dept is not None:
-#         print emp.name, dept.dept_name, dept.phone
-#     else:
-#         print emp.name, "-", "-"
-        
+    return "\nQuery complete.\n"
 
 
 def search_brands_by_name(mystr):
@@ -104,7 +105,7 @@ def search_brands_by_name(mystr):
     the given string."""
 
     brand_name = mystr
-    brand_list = db.session.query(Brand).filter(Brand.name.like('%brand_name%')).all()
+    brand_list = db.session.query(Brand).filter(Brand.name.like('%' + brand_name + '%')).all()
 
     return brand_list
 
