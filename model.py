@@ -17,7 +17,17 @@ class Brand(db.Model):
 
     __tablename__ = "brands"
 
-    pass
+    brand_id = db.Column(db.String(5), primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    founded = db.Column(db.Integer)
+    headquarters = db.Column(db.String(50))
+    discontinued = db.Column(db.Integer)
+
+    model = db.relationship('Model')
+
+    def __repr__(self):
+        return "<Brand brand_id=%s name=%s founded=%d headquarters=%s discontinued=%d>" % (
+            self.brand_id, self.name, self.founded, self.headquarters, self.discontinued)
 
 
 class Model(db.Model):
@@ -25,7 +35,16 @@ class Model(db.Model):
 
     __tablename__ = "models"
 
-    pass
+    model_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    year = db.Column(db.Integer, nullable=False)
+    brand_id = db.Column(db.String(5), db.ForeignKey('brands.brand_id'))
+    name = db.Column(db.String(10), nullable=False)
+
+    brand = db.relationship('Brand')
+
+    def __repr__(self):
+        return "<Model model_id=%d year=%d brand_id=%s name=%s>" % (
+            self.model_id, self.year, self.brand_id, self.name)
 
 # End Part 1
 
