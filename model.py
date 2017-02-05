@@ -26,8 +26,10 @@ class Brand(db.Model):
     model = db.relationship('Model')
 
     def __repr__(self):
-        return "<Brand brand_id=%s name=%s founded=%d headquarters=%s discontinued=%d>" % (
-            self.brand_id, self.name, self.founded, self.headquarters, self.discontinued)
+        # return "<Brand brand_id=%s name=%s founded=%d headquarters=%s discontinued=%d>" % (
+        #     self.brand_id, self.name, self.founded, self.headquarters, self.discontinued)
+        # how to handle null in repr?
+        return "<Brand brand_id=%s name=%s>" % (self.brand_id, self.name)
 
 
 class Model(db.Model):
