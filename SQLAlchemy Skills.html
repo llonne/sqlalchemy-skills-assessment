@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/ -->
+<html lang="en"><script data-x-lastpass="">(function(){var c=0;if("undefined"!==typeof CustomEvent&&"function"===typeof window.dispatchEvent){var a=function(a){try{if("object"===typeof a&&(a=JSON.stringify(a)),"string"===typeof a)return window.dispatchEvent(new CustomEvent("lprequeststart",{detail:{data:a,requestID:++c}})),c}catch(f){}},b=function(a){try{window.dispatchEvent(new CustomEvent("lprequestend",{detail:a}))}catch(f){}};"undefined"!==typeof XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.send&&(XMLHttpRequest.prototype.send=
+function(c){return function(f){var d=this,e=a(f);e&&d.addEventListener("loadend",function(){b({requestID:e,statusCode:d.status})});return c.apply(d,arguments)}}(XMLHttpRequest.prototype.send));"function"===typeof fetch&&(fetch=function(c){return function(f,d){var e=a(d),g=c.apply(this,arguments);if(e){var h=function(a){b({requestID:e,statusCode:a&&a.status})};g.then(h)["catch"](h)}return g}}(fetch))}})();
+(function(){if("undefined"!==typeof CustomEvent){var c=function(a){if(a.lpsubmit)return a;var b=function(){try{this.dispatchEvent(new CustomEvent("lpsubmit"))}catch(k){}return a.apply(this,arguments)};b.lpsubmit=!0;return b};window.addEventListener("DOMContentLoaded",function(){if(document&&document.forms&&0<document.forms.length)for(var a=0;a<document.forms.length;++a)document.forms[a].submit=c(document.forms[a].submit)},!0);document.createElement=function(a){return function(){var b=a.apply(this,
+arguments);b&&"FORM"===b.nodeName&&b.submit&&(b.submit=c(b.submit));return b}}(document.createElement)}})();
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>SQLAlchemy Skills</title>
+
+    <link rel="stylesheet" href="./SQLAlchemy Skills_files/pygments.css" type="text/css">
+    <link rel="stylesheet" href="./SQLAlchemy Skills_files/handouts-sphinx.css">
+
+    <link href="./SQLAlchemy Skills_files/css" rel="stylesheet" type="text/css">
+</head>
+<body data-pinterest-extension-installed="cr2.0.5">
+<div id="page-wrapper">
+    <div id="page-sidebar">
+        <header>
+            <p class="project">Hackbright Fellowship March 2017</p>
+
+            <p class="title">SQLAlchemy Skills</p>
+
+            <p class="backlink"><a href="http://fellowship.hackbrightacademy.com/"> « Back to Homepage</a></p>
+
+        </header>
+        <div id="toc">
+            <ul>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#">SQLAlchemy Skills</a><ul>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#take-aways">Take Aways</a></li>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#assessment">Assessment</a></li>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#directions">Directions</a><ul>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#setup">Setup</a></li>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#part-1-compose-orm">Part 1: Compose ORM</a></li>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#part-2-discussion-questions">Part 2: Discussion Questions</a></li>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#part-3-sqlalchemy-queries">Part 3: SQLAlchemy Queries</a></li>
+<li><a class="reference internal" href="http://fellowship.hackbrightacademy.com/materials/skills/sqlalchemy/#part-4-write-functions">Part 4: Write Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+    <div id="page-content">
+        
+  <div class="section" id="sqlalchemy-skills">
+<h1>SQLAlchemy Skills</h1>
+<p>SQLAlchemy Skills is meant to help you practice and assess your understanding of the SQLAlchemy ORM.</p>
+<p>Follow the directions below to review what you should have learned,
+practice implementing SQLAlchemy, and submit an assessment of your understanding.</p>
+<div class="section" id="take-aways">
+<h2>Take Aways</h2>
+<ul class="simple">
+<li>understand how to integrate SQLAlchemy ORM into a Flask application</li>
+<li>know how to use SQLAlchemy to create appropriate tables and columns for your database</li>
+<li>know how to write SQLAlchemy queries and fetch records from a database</li>
+<li>know how to navigate relationships between tables</li>
+</ul>
+</div>
+<div class="section" id="assessment">
+<h2>Assessment</h2>
+<p>Complete Parts 1 - 4 in the <cite>model.py</cite> and <cite>query.py</cite> files provided. Commit your files to Github and submit your links to Frodo by <strong>Sunday at 9 PM</strong>.</p>
+</div>
+<div class="section" id="directions">
+<h2>Directions</h2>
+<div class="section" id="setup">
+<h3>Setup</h3>
+<p>Make a virtual environment, and install the requirements.</p>
+<pre class="console literal-block">$ <span class="cmd">virtualenv env</span>
+$ <span class="cmd">source env/bin/activate</span>
+$ <span class="cmd">pip install -r requirements.txt</span>
+</pre>
+<p>Reminder: in Windows, use the command <code class="docutils literal"><span class="pre">virtualenv</span> <span class="pre">env</span> <span class="pre">--always-copy</span></code> to create
+a virtual environment.</p>
+<p>We’re going to use the same <cite>cars</cite> database that we used last weekend for the SQL
+assessment, but to make sure that you’re working with a clean copy, please drop,
+remake, and repopulate it using the following commands:</p>
+<pre class="console literal-block">$ <span class="cmd">dropdb cars</span>
+$ <span class="cmd">createdb cars</span>
+$ <span class="cmd">psql cars &lt; database.sql</span>
+</pre>
+</div>
+<div class="section" id="part-1-compose-orm">
+<h3>Part 1: Compose ORM</h3>
+<p>Using SQLAlchemy, fill in the columns for the classes already
+defined in <cite>model.py</cite>. The column names and data types should be the
+same as those in the <cite>cars</cite> database. (Since you already have tables, there
+is no need to run the command <code class="docutils literal"><span class="pre">db.create_all()</span></code> at any point during this
+assignment.)</p>
+<p>Be sure to include a <strong>relationship</strong> between the two tables using foreign keys,
+and please include a __repr__ for each class.</p>
+<p>Helper commands:</p>
+<ul class="simple">
+<li>To open the database: <code class="docutils literal"><span class="pre">psql</span> <span class="pre">cars</span></code></li>
+<li>To see a list of the tables: <code class="docutils literal"><span class="pre">\dt</span></code> (must be inside <cite>psql</cite>)</li>
+<li>To inspect the schema for each table: <code class="docutils literal"><span class="pre">\d</span> <span class="pre">TABLENAME</span></code> (must be inside <cite>psql</cite>)</li>
+</ul>
+</div>
+<div class="section" id="part-2-discussion-questions">
+<h3>Part 2: Discussion Questions</h3>
+<p>Please add your answers as comments in <cite>query.py</cite>.</p>
+<ol class="arabic simple">
+<li>What is the data type of the returned value of <code class="docutils literal"><span class="pre">Brand.query.filter_by(name='Ford')</span></code>?</li>
+<li>In your own words, what is an association table, and what type of relationship (many to one, many to many, one to one, etc.) does an association table manage?</li>
+</ol>
+</div>
+<div class="section" id="part-3-sqlalchemy-queries">
+<h3>Part 3: SQLAlchemy Queries</h3>
+<p>Please compose the following queries, using an interactive Python terminal
+to test them as you go along. Add your SQLAlchemy queries to the file called
+<cite>query.py</cite>.</p>
+<ol class="arabic simple">
+<li>Get the brand with the brand_id of <code class="docutils literal"><span class="pre">ram</span></code>.</li>
+<li>Get all models with the name <code class="docutils literal"><span class="pre">Corvette</span></code> and the brand_id <code class="docutils literal"><span class="pre">che</span></code>.</li>
+<li>Get all models that are older than 1960.</li>
+<li>Get all brands that were founded after 1920.</li>
+<li>Get all models with names that begin with <code class="docutils literal"><span class="pre">Cor</span></code>.</li>
+<li>Get all brands that were founded in 1903 and that are not yet discontinued.</li>
+<li>Get all brands that are either 1) discontinued (at any time) or 2) founded before 1950.</li>
+<li>Get all models whose brand_id is not <code class="docutils literal"><span class="pre">for</span></code>.</li>
+</ol>
+<p>Helper commands:</p>
+<p>To open an interactive terminal in order to test queries: <code class="docutils literal"><span class="pre">python</span> <span class="pre">-i</span> <span class="pre">model.py</span></code></p>
+</div>
+<div class="section" id="part-4-write-functions">
+<h3>Part 4: Write Functions</h3>
+<p>Fill in the stubbed out functions found in <cite>query.py</cite>. Important: You may only
+run a single query in each function. Feel free to format with newlines (<code class="docutils literal"><span class="pre">\n</span></code>)
+and/or tabs (<code class="docutils literal"><span class="pre">\t</span></code>) to create helpful and readable output.</p>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">get_model_info</span></code> should take a year as input and should print the model name, brand name, and brand headquarters for each model made that year.</li>
+<li><code class="docutils literal"><span class="pre">get_brands_summary</span></code> should take no input and should print each brand name (once) and all of that brand’s models, including their year.</li>
+<li><code class="docutils literal"><span class="pre">search_brands_by_name</span></code> should take in any string and should return a list of Brand objects that correspond to brands whose names contain or are equal to the input string.</li>
+<li><code class="docutils literal"><span class="pre">get_models_between</span></code> should take in a start year and an end year (two integers) and should return a list of Model objects that correspond to models made between the start year (inclusive) and end year (exclusive).</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+    </div>
+</div>
+<script type="text/javascript" src="./SQLAlchemy Skills_files/jquery.js.download"></script>
+<script type="text/javascript" src="./SQLAlchemy Skills_files/underscore.js.download"></script>
+<script type="text/javascript" src="./SQLAlchemy Skills_files/doctools.js.download"></script> 
+
+</body></html>
