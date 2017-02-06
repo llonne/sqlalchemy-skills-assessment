@@ -22,7 +22,8 @@ init_app()
 # 1. What is the datatype of the returned value of
 # ``Brand.query.filter_by(name='Ford')``?
 
-# ANS: Result values are datatype Object; instances of the class Brand.
+# ANS: This returns a query that needs to be executed with .all(), .one(), .first().
+# Query result values are datatype Object; instances of the class Brand.
 
 # 2. In your own words, what is an association table, and what type of
 # relationship (many to one, many to many, one to one, etc.) does an
@@ -44,7 +45,7 @@ q1 = "Brand.query.get('ram')"
 q2 = "Model.query.filter_by(name='Corvette',brand_id='che').all()"
 
 # Get all models that are older than 1960.
-q3 = "db.session.query(Model).filter(Model.year > 1960).all()"
+q3 = "db.session.query(Model).filter(Model.year < 1960).all()"
 
 # Get all brands that were founded after 1920.
 q4 = "db.session.query(Brand).filter(Brand.founded > 1920).all()"
@@ -57,7 +58,7 @@ q6 = "db.session.query(Brand).filter(Brand.founded == 1903, Brand.discontinued =
 
 # Get all brands that are either 1) discontinued (at any time) or 2) founded
 # before 1950.
-q7 = "db.session.query(Brand).filter((Brand.founded > 1950) | (Brand.discontinued != None)).all()"
+q7 = "db.session.query(Brand).filter((Brand.founded < 1950) | (Brand.discontinued != None)).all()"
 
 # Get any model whose brand_id is not "for."
 q8 = "db.session.query(Model).filter(Model.brand_id != 'for').all()"
